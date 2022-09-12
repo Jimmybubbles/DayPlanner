@@ -111,10 +111,10 @@ function GetCurrenttime(){
 
 
 $(document).on('click', '.saveBtn', function() {
-    var saveBtnInput = $(this).val();
+    var saveBtn = $(this).val();
     // variable for the descriptions value
-    var description = document.getElementById(saveBtnInput).value;
-    localStorage.setItem(saveBtnInput, description);
+    var description = document.getElementById(saveBtn).value;
+    localStorage.setItem(saveBtn, description);
 });
 
 //issue error script.js:105 Uncaught TypeError: Cannot read properties of null (reading 'value')
