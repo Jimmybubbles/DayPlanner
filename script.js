@@ -31,7 +31,7 @@ function GenerateTimeblocks(){
     //need to create elements for the html
     var row = document.createElement("div");
     // add the css class
-    row.classList.add("row", "past");
+    row.classList.add("row");
     timeblocks.appendChild(row);
 
     //need to add the iterations to the rows
@@ -43,7 +43,7 @@ function GenerateTimeblocks(){
     // need to add the textarea element to the iteration
     var textarea = document.createElement("textarea");
     textarea.placeholder = "this is where you will enter your notes"
-    textarea.setAttribute("class", "description")
+    textarea.setAttribute("class", "description" )
     textarea.setAttribute("id", i);
     row.appendChild(textarea);
 
@@ -55,7 +55,7 @@ function GenerateTimeblocks(){
     row.appendChild(saveBtn)
 
     }
-
+}
 // WHEN I view the timeblocks for that day
 // THEN each timeblock is COLOR CODED to indicate whether 
 // it is in the past, present, or future
@@ -73,18 +73,67 @@ function GetCurrenttime(){
 
     //https://momentjscom.readthedocs.io/en/latest/moment/05-query/00-intro/
     // issame, isBefore , isAfter
-    for (i = 0; i < descriptionColor; i++){
-        var timeblocks = moment(timeblocks[i],'h a');
-        if(currentHour.isSame(timeblocks) === true) {
+
+    // issue getting the color to change 
+    for (i = 0; i < descriptionColor.length; i++){
+        var timeBlocks = moment(descriptionColor[i],'h a');
+        if(currentHour.isSame(timeBlocks) === true) {
+            descriptionColor[i].classList.add('present')
+            descriptionColor[i].classList.remove('past')
+            descriptionColor[i].classList.remove('future')
+        } else if (currentHour.isBefore(timeBlocks) === true) {
+            descriptionColor[i].classList.add('future')
+            descriptionColor[i].classList.remove('present')
+            descriptionColor[i].classList.remove('future')
+        } else if (currentHour.isBefore(timeBlocks) === false) {
             descriptionColor[i].classList.add('past')
             descriptionColor[i].classList.remove('present')
             descriptionColor[i].classList.remove('future')
+    
         }
     }
-    
-}
-GetCurrenttime()
-}
+
+} GetCurrenttime()
 
 
- 
+
+
+// WHEN I click into a timeblock THEN I can enter an event
+// currently the text area allows for user input. need to save it to local storage
+// from looking at jquiry looks like need to have the save button on click to then save to local storage
+
+    // need to set the input to the local storage
+    //event handeler
+
+// $( "#dataTable tbody" ).on( "click", "tr", function() {
+//         console.log( $( this ).text() );
+//       });
+
+
+$(document).on('click', '.saveBtn', function() {
+    var saveBtnInput = $(this).val();
+    // variable for the descriptions value
+    var description = document.getElementById(saveBtnInput).value;
+    localStorage.setItem(saveBtnInput, description);
+});
+
+//issue error script.js:105 Uncaught TypeError: Cannot read properties of null (reading 'value')
+
+// assuming that i get the save button to save then will need to get
+// the values and show them on the screen.
+
+function getNotes(){
+    // get the data
+    localStorage.getItem("value")
+    // will need to loop over the values 
+    for(let i=0; i<localStorage.length; i++) {
+        let key = localStorage.key(i);
+        alert(`${key}: ${localStorage.getItem(key)}`);
+      }
+
+    for( let i = 0; i < timeBlocksArr.length; i++ ){
+        var getNotes = localStorage.getItem(i);
+        var textArea = document.getElementById(i);
+        textArea.innerText = getNotes;
+    }
+}
