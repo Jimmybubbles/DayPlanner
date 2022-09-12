@@ -16,7 +16,7 @@ setInterval(getTime, 1000);
 // make array of timeblocks
 
 var timeBlocksArr = [
-    "9am","10am","11am","12pm","1pm","2pm","3pm","4pm","5pm"
+    "9am","10am","11am","12pm","1pm","2pm","3pm","4pm","5pm",
 ]
 
 // now need to loop the array to dynamically populate the screen with the class'
@@ -24,17 +24,23 @@ GenerateTimeblocks()
 function GenerateTimeblocks(){
     timeblocks.innerHTML = "";
 
-    for (i = 0; i < timeBlocksArr.length; i++);
+    for (i = 0; i < timeBlocksArr.length; i++) {
     // make a row for each iteration
-    var RowHours = timeblocks[i];
+    var RowHours = timeBlocksArr[i];
 
     //need to create elements for the html
-    var row = document.createElement("div")
+    var row = document.createElement("div");
     // add the css class
-    row.classList.add("row", "past")
+    row.classList.add("row", "past");
     timeblocks.appendChild(row);
 
-    
+    //need to add the iterations to the rows
+    var hours = document.createElement("div");
+    hours.innerHTML = RowHours;
+    hours.classList.add("hour");
+    row.appendChild(hours);
+
+    }
 }
 
 
