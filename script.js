@@ -40,63 +40,43 @@ function GenerateTimeblocks(){
     hours.classList.add("hour");
     row.appendChild(hours);
    
-    // need to add the textarea element to the iteration
+    // need to add the textarea element to the rows
     var textarea = document.createElement("textarea");
-    textarea.placeholder = "this is where you will enter your notes"
+    textarea.placeholder = JSON.stringify("this is where you will enter your notes")
     textarea.setAttribute("class", "description" )
     textarea.setAttribute("id", i);
     row.appendChild(textarea);
 
     //need to add save button to the rows
     var saveBtn = document.createElement("saveBtn");
-    saveBtn.textContent = "Save"
+    saveBtn.textContent = "Save button"
     saveBtn.classList.add("saveBtn");
     saveBtn.setAttribute("value", i);
     row.appendChild(saveBtn)
 
     }
 }
-// WHEN I view the timeblocks for that day
-// THEN each timeblock is COLOR CODED to indicate whether 
-// it is in the past, present, or future
 
-//GET THE MOMENT CURRENT TIME 
+// $("#para4").on("myCustomEvent", function (event, value) {
+//     $(this).append(value);
+// });
+// // bound the save button to click event
+// // next need to save the text input from text area to the local storage.
+// $(document).ready(function() {
+//     // bind the savebtn element to the click() method
+//     $('saveBtn').click(function() {
+//         alert('sucess')
+//     });
+// });
+// $(element).on(event, childSelector, data, function)
+$(document).on('click', 'saveBtn', 'value', function() {
+        var saveBtnValue = $(this).value;
+        var discriptionbox = document.getElementById('saveBtn');       
+                                    // key : value
+        localStorage.setItem(saveBtnValue, discriptionbox);
+})
 
-function GetCurrenttime(){
-    // get the current hour and am/pm
-    var getCurHour = moment().format('h a');
-    // put into a variable
-    var currentHour = moment(getCurHour, 'h a');
-    // change the color of the description class
-    var descriptionColor = document.getElementsByClassName('description');
-    // loop through descriptioncolor and check against current hour
-
-    //https://momentjscom.readthedocs.io/en/latest/moment/05-query/00-intro/
-    // issame, isBefore , isAfter
-
-    // issue getting the color to change 
-    for (i = 0; i < descriptionColor.length; i++){
-        var timeBlocks = moment(descriptionColor[i],'h a');
-        if(currentHour.isSame(timeBlocks) === true) {
-            descriptionColor[i].classList.add('present')
-            descriptionColor[i].classList.remove('past')
-            descriptionColor[i].classList.remove('future')
-        } else if (currentHour.isBefore(timeBlocks) === true) {
-            descriptionColor[i].classList.add('future')
-            descriptionColor[i].classList.remove('present')
-            descriptionColor[i].classList.remove('future')
-        } else if (currentHour.isBefore(timeBlocks) === false) {
-            descriptionColor[i].classList.add('past')
-            descriptionColor[i].classList.remove('present')
-            descriptionColor[i].classList.remove('future')
-    
-        }
-    }
-
-} GetCurrenttime()
-
-
-
+// $(document).on('click', 'saveBtn', 'value', function() )
 
 // WHEN I click into a timeblock THEN I can enter an event
 // currently the text area allows for user input. need to save it to local storage
@@ -109,15 +89,35 @@ function GetCurrenttime(){
 //         console.log( $( this ).text() );
 //       });
 
+//Syntax of jQuery “.on()” Method
+//$(element).on(event, childSelector, data, function)
 
-$(document).on('click', '.saveBtn', function() {
-    var saveBtn = $(this).val();
-    // variable for the descriptions value
-    var description = document.getElementById(saveBtn).value;
-    localStorage.setItem(saveBtn, description);
-});
 
 //issue error script.js:105 Uncaught TypeError: Cannot read properties of null (reading 'value')
+
+
+
+
+// WHEN I view the timeblocks for that day
+// THEN each timeblock is COLOR CODED to indicate whether 
+// it is in the past, present, or future
+
+//GET THE MOMENT CURRENT TIME 
+
+// function GetCurrenttime(){
+//     // get the current hour and am/pm
+//     var getCurHour = moment().format('h a');
+//     // put into a variable
+//     var currentHour = moment(getCurHour, 'h a');
+//     // change the color of the description class
+//     var descriptionColor = document.getElementsByClassName('description');
+//     // loop through descriptioncolor and check against current hour
+
+
+
+
+
+
 
 // assuming that i get the save button to save then will need to get
 // the values and show them on the screen.
@@ -126,7 +126,7 @@ function getNotes(){
     // get the data
     localStorage.getItem("value")
     // will need to loop over the values 
-    for(let i=0; i<localStorage.length; i++) {
+    for(let i=0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
         alert(`${key}: ${localStorage.getItem(key)}`);
       }
@@ -136,4 +136,14 @@ function getNotes(){
         var textArea = document.getElementById(i);
         textArea.innerText = getNotes;
     }
+}
+
+// function to remove the localstorage and refresh the UI
+
+function removeLocStoreUpdateUI(){
+
+    var clearstorage =document.getElementById('clearbutton');
+    localStorage.clear(clearstorage);
+
+
 }
