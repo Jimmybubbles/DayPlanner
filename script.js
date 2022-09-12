@@ -16,7 +16,7 @@ setInterval(getTime, 1000);
 // make array of timeblocks
 
 var timeBlocksArr = [
-    "9am","10am","11am","12pm","1pm","2pm","3pm","4pm","5pm",
+    "9 am","10 am","11 am","12 pm","1 pm","2 pm","3 pm","4 pm","5 pm",
 ]
 
 // now need to loop the array to dynamically populate the screen with the class'
@@ -47,7 +47,43 @@ function GenerateTimeblocks(){
     textarea.setAttribute("id", i);
     row.appendChild(textarea);
 
+    //need to add save button to the rows
+    var saveBtn = document.createElement("saveBtn");
+    saveBtn.textContent = "Save"
+    saveBtn.classList.add("saveBtn");
+    saveBtn.setAttribute("value", i);
+    row.appendChild(saveBtn)
+
     }
+
+// WHEN I view the timeblocks for that day
+// THEN each timeblock is COLOR CODED to indicate whether 
+// it is in the past, present, or future
+
+//GET THE MOMENT CURRENT TIME 
+
+function GetCurrenttime(){
+    // get the current hour and am/pm
+    var getCurHour = moment().format('h a');
+    // put into a variable
+    var currentHour = moment(getCurHour, 'h a');
+    // change the color of the description class
+    var descriptionColor = document.getElementsByClassName('description');
+    // loop through descriptioncolor and check against current hour
+
+    //https://momentjscom.readthedocs.io/en/latest/moment/05-query/00-intro/
+    // issame, isBefore , isAfter
+    for (i = 0; i < descriptionColor; i++){
+        var timeblocks = moment(timeblocks[i],'h a');
+        if(currentHour.isSame(timeblocks) === true) {
+            descriptionColor[i].classList.add('past')
+            descriptionColor[i].classList.remove('present')
+            descriptionColor[i].classList.remove('future')
+        }
+    }
+    
+}
+GetCurrenttime()
 }
 
 
