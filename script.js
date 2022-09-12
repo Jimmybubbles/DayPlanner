@@ -39,6 +39,13 @@ function GenerateTimeblocks(){
     hours.innerHTML = RowHours;
     hours.classList.add("hour");
     row.appendChild(hours);
+   
+    // need to add the textarea element to the iteration
+    var textarea = document.createElement("textarea");
+    textarea.placeholder = "this is where you will enter your notes"
+    textarea.setAttribute("class", "description")
+    textarea.setAttribute("id", i);
+    row.appendChild(textarea);
 
     }
 }
