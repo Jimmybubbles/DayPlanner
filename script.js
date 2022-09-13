@@ -20,8 +20,8 @@ var timeBlocksArr = [
 ]
 
 // now need to loop the array to dynamically populate the screen with the class'
-GenerateTimeblocks()
-function GenerateTimeblocks(){
+GenerateTimeblocks();
+function GenerateTimeblocks() {
     timeblocks.innerHTML = "";
 
     for (i = 0; i < timeBlocksArr.length; i++) {
@@ -42,39 +42,50 @@ function GenerateTimeblocks(){
    
     // need to add the textarea element to the rows
     var textarea = document.createElement("textarea");
-    textarea.placeholder = JSON.stringify("this is where you will enter your notes")
-    textarea.setAttribute("class", "description" )
+    textarea.placeholder = "this is where you will enter your notes";
+    textarea.setAttribute("class", "description");
     textarea.setAttribute("id", i);
     row.appendChild(textarea);
 
     //need to add save button to the rows
-    var saveBtn = document.createElement("saveBtn");
-    saveBtn.textContent = "Save button"
+    var saveBtn = document.createElement("Button");
+    saveBtn.textContent = "Save button";
     saveBtn.classList.add("saveBtn");
     saveBtn.setAttribute("value", i);
-    row.appendChild(saveBtn)
+    row.appendChild(saveBtn);
 
     }
 }
+
+
+// key, is the button Id saveBtn (value)
+// value, i want is the textarea input
+
+// both need to be strings so JSON.stringify("value", "description")
+
+// then i want to store the pair in local Storage.
+
+// $(element).on(event, childSelector, data, function)
+$(document).on('click', '.saveBtn', function() {
+    // this is the value i want from the button
+    var saveBtnValue = $(this).val();
+    // this is the key
+    var discriptionBox = document.getElementById(saveBtnValue).value;       
+                                // key : value
+    localStorage.setItem(saveBtnValue , discriptionBox);
+});
 
 // $("#para4").on("myCustomEvent", function (event, value) {
 //     $(this).append(value);
 // });
 // // bound the save button to click event
 // // next need to save the text input from text area to the local storage.
-// $(document).ready(function() {
-//     // bind the savebtn element to the click() method
-//     $('saveBtn').click(function() {
-//         alert('sucess')
-//     });
-// });
-// $(element).on(event, childSelector, data, function)
-$(document).on('click', 'saveBtn', 'value', function() {
-        var saveBtnValue = $(this).value;
-        var discriptionbox = document.getElementById('saveBtn');       
-                                    // key : value
-        localStorage.setItem(saveBtnValue, discriptionbox);
-})
+
+
+
+
+
+
 
 // $(document).on('click', 'saveBtn', 'value', function() )
 
@@ -102,18 +113,6 @@ $(document).on('click', 'saveBtn', 'value', function() {
 // THEN each timeblock is COLOR CODED to indicate whether 
 // it is in the past, present, or future
 
-//GET THE MOMENT CURRENT TIME 
-
-// function GetCurrenttime(){
-//     // get the current hour and am/pm
-//     var getCurHour = moment().format('h a');
-//     // put into a variable
-//     var currentHour = moment(getCurHour, 'h a');
-//     // change the color of the description class
-//     var descriptionColor = document.getElementsByClassName('description');
-//     // loop through descriptioncolor and check against current hour
-
-
 
 
 
@@ -124,8 +123,8 @@ $(document).on('click', 'saveBtn', 'value', function() {
 
 function getNotes(){
     // get the data
-    localStorage.getItem("value")
-    // will need to loop over the values 
+    localStorage.getItem("")
+        // will need to loop over the values 
     for(let i=0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
         alert(`${key}: ${localStorage.getItem(key)}`);
@@ -136,14 +135,4 @@ function getNotes(){
         var textArea = document.getElementById(i);
         textArea.innerText = getNotes;
     }
-}
-
-// function to remove the localstorage and refresh the UI
-
-function removeLocStoreUpdateUI(){
-
-    var clearstorage =document.getElementById('clearbutton');
-    localStorage.clear(clearstorage);
-
-
 }
