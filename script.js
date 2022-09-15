@@ -1,6 +1,6 @@
 //global variables
 var localTime = document.getElementById("currentDay");
-var timeblocks = document.getElementById("timeblocks");
+var timeblocks = document.getElementById("time-block");
 
 // create a function that will get the time from the momentjs api and then serve it to the screen.
 function getTime(){
@@ -82,6 +82,37 @@ $(document).on('click', '.saveBtn', function() {
 // // next need to save the text input from text area to the local storage.
 
 
+// function using momentjs to check if the time is the same as current
+
+// if its the same hour as the current time 
+
+// then i want to change the class of the element to relevant css
+
+function timeBlockColorChange() {
+    // variable that has the current hour and the am/pm
+    var getCurrentHour = moment().format('h a');
+    // variable that has the current time and hour from class
+    var currentHour = moment(getCurrentHour, 'h a');
+    // variable to get the class description 
+    var descriptionBox = document.getElementsByClassName("description")
+    // now have to check the moment hour against the hour in desctiption row
+
+    // loop that will loop through the timeblocks
+    for( var i = 0; i < descriptionBox.length; i++) {
+        // variable for the timeblock to compare to
+        var currentTimeblock = moment(timeblocks[1], 'h a');
+        // if the currennt hour is same as current time block add present class
+        if (currentHour.isSame(currentTimeblock) === true) {
+            
+            descriptionBox[i].classList.add('present')
+            descriptionBox[i].classList.remove('future')
+            descriptionBox[i].classList.remove('past')
+            
+        }
+    }
+
+}
+timeBlockColorChange()
 
 
 
@@ -121,18 +152,18 @@ $(document).on('click', '.saveBtn', function() {
 // assuming that i get the save button to save then will need to get
 // the values and show them on the screen.
 
-function getNotes(){
-    // get the data
-    localStorage.getItem("")
-        // will need to loop over the values 
-    for(let i=0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        alert(`${key}: ${localStorage.getItem(key)}`);
-      }
+// function getNotes(){
+//     // get the data
+//     localStorage.getItem("")
+//         // will need to loop over the values 
+//     for(let i=0; i < localStorage.length; i++) {
+//         let key = localStorage.key(i);
+//         alert(`${key}: ${localStorage.getItem(key)}`);
+//       }
 
-    for( let i = 0; i < timeBlocksArr.length; i++ ){
-        var getNotes = localStorage.getItem(i);
-        var textArea = document.getElementById(i);
-        textArea.innerText = getNotes;
-    }
-}
+//     for( let i = 0; i < timeBlocksArr.length; i++ ){
+//         var getNotes = localStorage.getItem(i);
+//         var textArea = document.getElementById(i);
+//         textArea.innerText = getNotes;
+//     }
+// }
